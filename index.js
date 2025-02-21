@@ -18,6 +18,9 @@ global.htmlspecialchars = require('htmlspecialchars');
 const Users_R = require('./Routers/Users_R');
 app.use('/U/',Users_R);
 
+const Measurements_R = require('./Routers/Measurements_R');
+app.use('/M/',Measurements_R);
+
 app.listen(port, () => {            //server starts listening for any attempts from a client to connect at port: {port}
     console.log(`Now listening on port http://localhost:${port}`);
 });
