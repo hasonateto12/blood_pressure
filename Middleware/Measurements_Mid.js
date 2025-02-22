@@ -59,13 +59,13 @@ async function Updatemeasurements(req,res,next){
     let date        = (req.body.date        === undefined)  ?      "" : addSlashes(req.body.date    );
 
     let Query = `UPDATE measurements SET `;
-    Query += ` user_id      = '${user_id     }', `;
-    Query += ` high_value       = '${high_value       }', `;
+    Query += ` user_id      = '${user_id}', `;
+    Query += ` high_value       = '${high_value}', `;
     Query += ` low_value = '${low_value}', `;
-    Query += ` heart_rate       = '${heart_rate      }', `;
-    Query += ` date      = '${date     }', `;
+    Query += ` heart_rate       = '${heart_rate}', `;
+    Query += ` date      = '${date}', `;
     Query += ` WHERE id = ${idx} `;
-     console.log(Query);
+     //console.log(Query);
     const promisePool = db_pool.promise();
     let rows=[];
     try {
