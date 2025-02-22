@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Pressure Monitoring</title>
+</head>
+<body>
+<h1>Blood Pressure Measurements</h1>
+
+<!-- Form to add a measurement -->
+<h2>Add Measurement</h2>
+<form id="addMeasurementForm">
+    <label for="user_id">User ID:</label>
+    <input type="text" id="user_id" required><br><br>
+    <label for="high_value">High Value (Systolic):</label>
+    <input type="text" id="high_value" required><br><br>
+    <label for="low_value">Low Value (Diastolic):</label>
+    <input type="text" id="low_value" required><br><br>
+    <label for="heart_rate">Heart Rate:</label>
+    <input type="text" id="heart_rate" required><br><br>
+    <label for="date">Date:</label>
+    <input type="date" id="date" required><br><br>
+    <button type="submit">Add Measurement</button>
+</form>
+
+<br>
+
+<!-- Form to update a measurement -->
+<h2>Update Measurement</h2>
+<form id="updateMeasurementForm">
+    <label for="idx">Measurement ID:</label>
+    <input type="text" id="idx" required><br><br>
+    <label for="update_high_value">High Value (Systolic):</label>
+    <input type="text" id="update_high_value" required><br><br>
+    <label for="update_low_value">Low Value (Diastolic):</label>
+    <input type="text" id="update_low_value" required><br><br>
+    <label for="update_heart_rate">Heart Rate:</label>
+    <input type="text" id="update_heart_rate" required><br><br>
+    <label for="update_date">Date:</label>
+    <input type="date" id="update_date" required><br><br>
+    <button type="submit">Update Measurement</button>
+</form>
+
+<br>
+
+<!-- Table to view all measurements -->
+<h2>All Measurements</h2>
+<table id="measurementsTable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>User ID</th>
+        <th>High Value</th>
+        <th>Low Value</th>
+        <th>Heart Rate</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Data will be dynamically inserted here -->
+    </tbody>
+</table>
+
+<br>
+
+<!-- Script to handle form submissions and display data -->
+<script>
+    // Add Measurement
+    document.getElementById('addMeasurementForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const user_id = document.getElementById('user_id').value;
+        const high_value = document.getElementById('high_value').value;
+        const low_value = document.getElementById('low_value').value;
+        const heart_rate = document.getElementById('heart_rate').value;
+        const date = document.getElementById('date').value;
+
+        const response = await fetch('/M', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user_id, high_value, low_value, heart_rate, date }),
+        });
+
+        const result = await response.json();
+        alert(result.msg);
+        loadMeasurements();
+    });
+
+    // Update Measurement
+    document.getElementById('updateMeasurementForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const idx = document.getElementById('idx').value;
+        const high_value = document.getElementById('update_high_value').value;
+        const low_value = document.getElementById('update_low_value').value;
+        const heart_rate = document.getElementById('update_heart_rate').value;
+        const date = document.getElementById('update_date').value;
+
+        const response = await fetch('/M', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ idx, high_value, low_value, heart_rate, date }),
+        });
+
+        const result = await response.json();
+        alert(result.msg);
+        loadMeasurements();
+    });
+
+    // Load All Measurements
+    async function loadMeasurements() {
+        const response = await fetch('/M');
+        const result = await response.json();
+        const tableBody = document.getElementById('measurementsTable').getElementsByTagName('tbody')[0];
+        tableBody.innerHTML = '';
+        result.data.forEach(row => {
+            const newRow = tableBody.insertRow();
+            newRow.insertCell(0).innerText = row.id;
+            newRow.insertCell(1).innerText = row.user_id;
+            newRow.insertCell(2).innerText = row.high_value;
+            newRow.insertCell(3).innerText = row.low_value;
+            newRow.insertCell(4).innerText = row.heart_rate;
+            newRow.insertCell(5).innerText = row.date;
+        });
+    }
+
+    loadMeasurements();
+</script>
+</body>
+</html>
