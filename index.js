@@ -14,6 +14,7 @@ global.db_pool = db_M.pool;
 global.htmlspecialchars = require('htmlspecialchars');
 // const { addSlashes, stripSlashes } = require('slashes');
 
+app.use("/js",express.static(path.join(__dirname, "js")));
 
 const Users_R = require('./Routers/Users_R');
 app.use('/U/',Users_R);
