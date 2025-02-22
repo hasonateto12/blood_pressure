@@ -16,6 +16,8 @@ global.htmlspecialchars = require('htmlspecialchars');
 
 app.use("/js",express.static(path.join(__dirname, "js")));
 
+app.use("/css",express.static(path.join(__dirname, "css")));
+
 const Users_R = require('./Routers/Users_R');
 app.use('/U/',Users_R);
 
