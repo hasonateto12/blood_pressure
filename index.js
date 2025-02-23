@@ -14,6 +14,10 @@ global.db_pool = db_M.pool;
 global.htmlspecialchars = require('htmlspecialchars');
 // const { addSlashes, stripSlashes } = require('slashes');
 
+app.set("view engine", "ejs");
+
+app.set('views', path.join(__dirname, "/views"));
+
 app.use("/js",express.static(path.join(__dirname, "js")));
 
 app.use("/css",express.static(path.join(__dirname, "css")));
