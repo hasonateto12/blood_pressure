@@ -2,7 +2,7 @@ const { addSlashes, stripSlashes } = require('slashes');
 
 async function Addmeasurements(req,res,next){
     let user_id       = (req.body.user_id       === undefined)  ?      -1 : parseInt(req.body.user_id     );
-    let high_value        = (req.body.high_value        === undefined)  ?      -1 : parseInt(req.body.high_value      );
+    let high_value        = (req.body.high_value=== undefined    )  ?       -1 : parseInt(req.body.low_value);
     let low_value  = (req.body.low_value  === undefined)  ?       -1 : parseInt(req.body.low_value);
     let heart_rate        = (req.body.heart_rate        === undefined)  ?       -1 : parseInt(req.body.heart_rate      );
     let date        = (req.body.date        === undefined)  ?      "" : addSlashes(req.body.date    );
@@ -16,6 +16,7 @@ async function Addmeasurements(req,res,next){
     let rows=[];
     try {
         [rows] = await promisePool.query(Query);
+        console.log(rows);
         req.success=true;
         req.insertId=rows.insertId;
 
