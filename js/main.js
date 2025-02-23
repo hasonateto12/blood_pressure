@@ -43,3 +43,23 @@ document.getElementById('updateMeasurementForm').addEventListener('submit', asyn
     alert(result.msg);
     loadMeasurements();
 });
+
+
+// Load All Measurements
+async function loadMeasurements() {
+    const response = await fetch('/M/');
+    const result = await response.json();
+    const tableBody = document.getElementById('measurementsTable').getElementsByTagName('tbody')[0];
+    tableBody.innerHTML = '';
+    result.data.forEach(row => {
+        const newRow = tableBody.insertRow();
+        newRow.insertCell(0).innerText = row.id;
+        newRow.insertCell(1).innerText = row.user_id;
+        newRow.insertCell(2).innerText = row.high_value;
+        newRow.insertCell(3).innerText = row.low_value;
+        newRow.insertCell(4).innerText = row.heart_rate;
+        newRow.insertCell(5).innerText = row.date;
+    });
+}
+
+loadMeasurements();
