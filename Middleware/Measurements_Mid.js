@@ -28,26 +28,21 @@ async function Addmeasurements(req,res,next){
 
     next();
 }
-async function Readmeasurements(req, res, next) {
-    let Query = `SELECT *, DATE_FORMAT(date, "%d-%m-%Y") AS formatted_date FROM measurements`;
-
+async function Readmeasurements(req,res,next){
+    let Query = 'SELECT *';
+    Query   += ',DATE_FORMAT(date,"%d-%m-%Y") AS date  ';
+    Query   += ' FROM measurements ';
+    // console.log(Query);
     const promisePool = db_pool.promise();
-    let rows = [];
-
+    let rows=[];
     try {
         [rows] = await promisePool.query(Query);
-        for (let idx in rows) {
-            rows[idx].date = stripSlashes(rows[idx].formatted_date);
-            delete rows[idx].formatted_date;
-        }
-
-        req.success = true;
-        req.measurements_data = rows;
+        req.success=true;
+        req.measurements_data=rows;
     } catch (err) {
-        req.success = false;
+        req.success=false;
         console.log(err);
     }
-
     next();
 }
 
