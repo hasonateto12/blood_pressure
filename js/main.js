@@ -20,3 +20,26 @@ document.getElementById('addMeasurementForm').addEventListener('submit', async f
     alert(result.msg);
     loadMeasurements();
 });
+
+// Update Measurement
+document.getElementById('updateMeasurementForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const idx = document.getElementById('idx').value;
+    const high_value = document.getElementById('update_high_value').value;
+    const low_value = document.getElementById('update_low_value').value;
+    const heart_rate = document.getElementById('update_heart_rate').value;
+    const date = document.getElementById('update_date').value;
+
+    const response = await fetch('/M/', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ idx, high_value, low_value, heart_rate, date }),
+    });
+
+    const result = await response.json();
+    alert(result.msg);
+    loadMeasurements();
+});
