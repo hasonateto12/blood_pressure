@@ -9,14 +9,14 @@
 <body>
 <h1>Blood Pressure Measurements</h1>
 
-<!-- Form to add a measurement -->
+
 <h2>Add Measurement</h2>
 <form id="addMeasurementForm">
     <label for="user_id">User ID:</label>
     <input type="text" id="user_id" required><br><br>
-    <label for="high_value">High Value (Systolic):</label>
+    <label for="high_value">High Value</label>
     <input type="text" id="high_value" required><br><br>
-    <label for="low_value">Low Value (Diastolic):</label>
+    <label for="low_value">Low Value</label>
     <input type="text" id="low_value" required><br><br>
     <label for="heart_rate">Heart Rate:</label>
     <input type="text" id="heart_rate" required><br><br>
@@ -27,7 +27,7 @@
 
 <br>
 
-<!-- Form to update a measurement -->
+
 <h2>Update Measurement</h2>
 <form id="updateMeasurementForm">
     <label for="idx">Measurement ID:</label>
@@ -45,7 +45,7 @@
 
 <br>
 
-<!-- Table to view all measurements -->
+
 <h2>All Measurements</h2>
 <table id="measurementsTable">
     <thead>
@@ -59,13 +59,13 @@
     </tr>
     </thead>
     <tbody>
-    <!-- Data will be dynamically inserted here -->
+
     </tbody>
 </table>
 
 <br>
 
-<!-- Script to handle form submissions and display data -->
+
 <script>
     // Add Measurement
     document.getElementById('addMeasurementForm').addEventListener('submit', async function(e) {
@@ -77,7 +77,7 @@
         const heart_rate = document.getElementById('heart_rate').value;
         const date = document.getElementById('date').value;
 
-        const response = await fetch('/M', {
+        const response = await fetch('/M/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -100,7 +100,7 @@
         const heart_rate = document.getElementById('update_heart_rate').value;
         const date = document.getElementById('update_date').value;
 
-        const response = await fetch('/M', {
+        const response = await fetch('/M/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -115,7 +115,7 @@
 
     // Load All Measurements
     async function loadMeasurements() {
-        const response = await fetch('/M');
+        const response = await fetch('/M/');
         const result = await response.json();
         const tableBody = document.getElementById('measurementsTable').getElementsByTagName('tbody')[0];
         tableBody.innerHTML = '';
