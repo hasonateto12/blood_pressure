@@ -63,7 +63,7 @@ table {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-th, td,h2,h2,h1 {
+th, td,h2,h2,h1,h3 {
     padding: 12px;
     text-align: center;
     border: 1px solid #ddd;
