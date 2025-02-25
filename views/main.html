@@ -1,69 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood Pressure Monitoring</title>
-    <link rel="stylesheet" href="/css/main.css">
-</head>
-<body>
-<h1>Blood Pressure Measurements</h1>
 
 
-<h2>Add Measurement</h2>
-<form id="addMeasurementForm">
-    <label for="user_id">User ID:</label>
-    <input type="text" id="user_id" required><br><br>
-    <label for="high_value">High Value</label>
-    <input type="text" id="high_value" required><br><br>
-    <label for="low_value">Low Value</label>
-    <input type="text" id="low_value" required><br><br>
-    <label for="heart_rate">Heart Rate:</label>
-    <input type="text" id="heart_rate" required><br><br>
-    <label for="date">Date:</label>
-    <input type="date" id="date" required><br><br>
-    <button type="submit">Add Measurement</button>
-</form>
+            <!DOCTYPE html>
+            <html lang="ar">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>מעקב לחץ הדם</title>
+                <link rel="stylesheet" href="/css/main.css">
+            </head>
+            <body>
 
-<br>
+            <h2>מעקב לחץ הדם</h2>
+
+            <label for="userSelectHistory"></label>
+            <select id="userSelectHistory" onchange="toggleTable()">
+            </select>
+
+            <table id="dataTable">
+                <thead>
+                <tr>
+                    <th>לחץ סיסטולי</th>
+                    <th>לחץ דיאסטולי</th>
+                    <th>דופק</th>
+                    <th>תאריך</th>
+                </tr>
+                </thead>
+                <tbody id="mainTableData">
+                </tbody>
+            </table>
+
+            <div id="inputTable">
+                <h3>הוספת מדידות </h3>
+                <table>
+                    <tr>
+                        <th>לחץ סיסטולי</th>
+                        <th>לחץ דיאסטולי</th>
+                        <th>דופק</th>
+                        <th>תאריך</th>
+                    </tr>
+                    <tr>
+                        <td><input type="number" id="highValue" ></td>
+                        <td><input type="number" id="lowValue" ></td>
+                        <td><input type="number" id="heartRate" ></td>
+                        <td><input type="date" id="measurementDate"></td>
+                    </tr>
+                </table>
+                <button onclick="sendMeasurement()">שליחת נתונים</button>
+            </div>
+            <script src="/js/main.js"></script>
+            </body>
+            </html>
 
 
-<h2>Update Measurement</h2>
-<form id="updateMeasurementForm">
-    <label for="idx">Measurement ID:</label>
-    <input type="text" id="idx" required><br><br>
-    <label for="update_high_value">High Value (Systolic):</label>
-    <input type="text" id="update_high_value" required><br><br>
-    <label for="update_low_value">Low Value (Diastolic):</label>
-    <input type="text" id="update_low_value" required><br><br>
-    <label for="update_heart_rate">Heart Rate:</label>
-    <input type="text" id="update_heart_rate" required><br><br>
-    <label for="update_date">Date:</label>
-    <input type="date" id="update_date" required><br><br>
-    <button type="submit">Update Measurement</button>
-</form>
-
-<br>
 
 
-<h2>All Measurements</h2>
-<table id="measurementsTable">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>User ID</th>
-        <th>High Value</th>
-        <th>Low Value</th>
-        <th>Heart Rate</th>
-        <th>Date</th>
-    </tr>
-    </thead>
-    <tbody>
 
-    </tbody>
-</table>
 
-<br>
-<script src="/js/main.js"></script>
-</body>
-</html>
+
+
