@@ -127,3 +127,8 @@ button:hover {
         padding: 10px;
     }
 }
+/* التمييز للقياسات التي تتجاوز 20% من المتوسط */
+.highlighted {
+    background-color: #fd0000;  /* تغيير الخلفية إلى اللون الأحمر الفاتح */
+    font-weight: bold;  /* جعل النص غامقًا */
+}
