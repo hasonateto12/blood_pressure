@@ -41,14 +41,16 @@ function CreateTableBody(measurements) {
 
     for (let row of measurements) {
         let smart_due = row.date !== "00-00-0000" ? row.date : "";
+        let rowClass = row.highlight ? "highlighted" : "";
+
         tableBody.innerHTML += `
-                    <tr>
-                        <td>${row.high_value}</td>
-                        <td>${row.low_value}</td>
-                        <td>${row.heart_rate}</td>
-                        <td>${smart_due}</td>
-                    </tr>
-                `;
+            <tr class="${rowClass}">
+                <td>${row.high_value}</td>
+                <td>${row.low_value}</td>
+                <td>${row.heart_rate}</td>
+                <td>${smart_due}</td>
+            </tr>
+        `;
     }
 }
 
@@ -67,7 +69,7 @@ function loadUserMeasurements() {
     } else {
         messageDiv.innerHTML = "נא לבחר שם";
         messageDiv.style.display = "block";
-        inputTable.style.display = "none";  // إخفاء النموذج إذا لم يتم اختيار مستخدم
+        inputTable.style.display = "none";
     }
 }
 
@@ -106,10 +108,10 @@ async function sendMeasurement() {
         let result = await response.json();
         console.log("OK", result);
 
-        // بعد إرسال البيانات بنجاح، استدعاء GetMeasurements لعرض البيانات الجديدة
+
         GetMeasurements(userId);
 
-        // إظهار الجدول بعد إدخال البيانات
+
         let table = document.getElementById("dataTable");
         table.style.display = "table";
 
@@ -121,7 +123,7 @@ async function sendMeasurement() {
 
 async function BuildPage() {
     await GetUsers();
-    toggleTable();  // تحديث الواجهة لتكون متوافقة مع حالة المستخدم المختار
+    toggleTable();  //
 }
 
 function toggleTable() {
@@ -130,11 +132,11 @@ function toggleTable() {
     let inputTable = document.getElementById("inputTable");
 
     if (userId) {
-        table.style.display = "none";  // إخفاء الجدول
-        inputTable.style.display = "block";  // إظهار النموذج لإرسال البيانات
+        table.style.display = "none";
+        inputTable.style.display = "block";
     } else {
-        table.style.display = "none";  // إخفاء الجدول
-        inputTable.style.display = "none";  // إخفاء النموذج
+        table.style.display = "none";
+        inputTable.style.display = "none";
     }
 }
 
