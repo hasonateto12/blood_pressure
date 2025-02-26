@@ -28,51 +28,63 @@ async function Addmeasurements(req,res,next){
 
     next();
 }
-async function Readmeasurements(req,res,next){
-    let Query = 'SELECT *';
-    Query   += ',DATE_FORMAT(date,"%d-%m-%Y") AS date  ';
-    Query   += ' FROM measurements ';
-    // console.log(Query);
+async function Readmeasurements(req, res, next) {
+    let Query = 'SELECT *, ';
+    Query += 'DATE_FORMAT(date, "%d-%m-%Y") AS date, ';
+    Query += '(SELECT AVG(high_value) FROM measurements) AS avg_high, ';
+    Query += '(SELECT AVG(low_value) FROM measurements) AS avg_low, ';
+    Query += '(SELECT AVG(heart_rate) FROM measurements) AS avg_heart ';
+    Query += 'FROM measurements';
+
     const promisePool = db_pool.promise();
-    let rows=[];
+    let rows = [];
+
     try {
         [rows] = await promisePool.query(Query);
-        req.success=true;
-        req.measurements_data=rows;
+        rows = rows.map(measurement => ({
+            ...measurement,
+            highlight: measurement.high_value > measurement.avg_high * 1.2 ||
+                measurement.low_value > measurement.avg_low * 1.2 ||
+                measurement.heart_rate > measurement.avg_heart * 1.2
+        }));
+
+        req.success = true;
+        req.measurements_data = rows;
     } catch (err) {
-        req.success=false;
+        req.success = false;
         console.log(err);
     }
     next();
 }
 
-async function Updatemeasurements(req,res,next){
-    let idx    = parseInt(req.body.idx);
-    let user_id       = (req.body.user_id       === undefined)  ?      -1 : parseInt(req.body.user_id     );
-    let high_value        = (req.body.high_value        === undefined)  ?      -1 : parseInt(req.body.high_value      );
-    let low_value  = (req.body.low_value  === undefined)  ?       -1 : parseInt(req.body.low_value);
-    let heart_rate        = (req.body.heart_rate        === undefined)  ?       -1 : parseInt(req.body.heart_rate      );
-    let date        = (req.body.date        === undefined)  ?      "" : addSlashes(req.body.date    );
+async function Updatemeasurements(req, res, next) {
+    let idx = parseInt(req.body.idx);
+    let high_value = (req.body.high_value === undefined) ? -1 : parseInt(req.body.high_value);
+    let low_value = (req.body.low_value === undefined) ? -1 : parseInt(req.body.low_value);
+    let heart_rate = (req.body.heart_rate === undefined) ? -1 : parseInt(req.body.heart_rate);
+    let date = (req.body.date === undefined) ? "" : addSlashes(req.body.date);
 
-    let Query = `UPDATE measurements SET `;
-    Query += ` user_id      = '${user_id}', `;
-    Query += ` high_value       = '${high_value}', `;
-    Query += ` low_value = '${low_value}', `;
-    Query += ` heart_rate       = '${heart_rate}', `;
-    Query += ` date      = '${date}', `;
-    Query += ` WHERE id = ${idx} `;
-     //console.log(Query);
+    // بناء الاستعلام باستخدام الاستعلامات المعلمة لتجنب حقن SQL
+    let Query = `UPDATE measurements SET high_value = ?, low_value = ?, heart_rate = ?, date = ? WHERE id = ?`;
+
     const promisePool = db_pool.promise();
-    let rows=[];
     try {
-        [rows] = await promisePool.query(Query);
-        req.success=true;
+        const [rows] = await promisePool.query(Query, [high_value, low_value, heart_rate, date, idx]);
+        if (rows.affectedRows > 0) {
+            req.success = true;
+        } else {
+            req.success = false;
+            req.errorMessage = "No records were updated.";
+        }
     } catch (err) {
-        req.success=false;
+        req.success = false;
+        req.errorMessage = "Database error.";
         console.log(err);
     }
+
     next();
 }
+
 async function Deletemeasurements(req,res,next){
     let idx    = parseInt(req.body.idx);
     let Query = `DELETE FROM measurements  `;
