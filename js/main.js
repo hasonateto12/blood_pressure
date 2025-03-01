@@ -54,21 +54,18 @@ function CreateTableBody(measurements) {
     }
 }
 
-function loadUserMeasurements() {
-    let select = document.getElementById("userSelectHistory");
-    let userId = select.value;
-    let messageDiv = document.getElementById("userMessage");
+function toggleTable() {
+    let userId = document.getElementById("userSelectHistory").value;
+    let table = document.getElementById("dataTable");
     let inputTable = document.getElementById("inputTable");
-    let selectedUser = select.options[select.selectedIndex].text;
 
     if (userId) {
-        messageDiv.innerHTML = ` <strong>${selectedUser}</strong>`;
-        messageDiv.style.display = "block";
+        table.style.display = "table";
         inputTable.style.display = "block";
         GetMeasurements(userId);
     } else {
-        messageDiv.innerHTML = "נא לבחר שם";
-        messageDiv.style.display = "block";
+        alert("נא לבחור משתמש");
+        table.style.display = "none";
         inputTable.style.display = "none";
     }
 }
@@ -81,12 +78,12 @@ async function sendMeasurement() {
     let measurementDate = document.getElementById("measurementDate").value;
 
     if (!userId) {
-        alert("נא לבחר שם!");
+        alert("נא לבחור משתמש!");
         return;
     }
 
     if (!highValue || !lowValue || !heartRate || !measurementDate) {
-        alert("בבקשה למלא כל הנתונים לפני השליחה!");
+        alert("בבקשה למלא את כל הנתונים לפני השליחה!");
         return;
     }
 
@@ -108,37 +105,19 @@ async function sendMeasurement() {
         let result = await response.json();
         console.log("OK", result);
 
-
         GetMeasurements(userId);
-
 
         let table = document.getElementById("dataTable");
         table.style.display = "table";
 
     } catch (error) {
         console.error("ERROR", error);
-        alert("error in adding data");
+        alert("שגיאה בהוספת הנתונים");
     }
 }
 
 async function BuildPage() {
     await GetUsers();
-    toggleTable();  //
 }
 
-function toggleTable() {
-    let userId = document.getElementById("userSelectHistory").value;
-    let table = document.getElementById("dataTable");
-    let inputTable = document.getElementById("inputTable");
-
-    if (userId) {
-        table.style.display = "none";
-        inputTable.style.display = "block";
-    } else {
-        table.style.display = "none";
-        inputTable.style.display = "none";
-    }
-}
-
-toggleTable();
 BuildPage();
