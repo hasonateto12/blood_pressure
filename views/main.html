@@ -11,9 +11,9 @@
 <h2>מעקב לחץ הדם</h2>
 
 <label for="userSelectHistory"></label>
-<select id="userSelectHistory">
+<select id="userSelectHistory" onchange="showInputSection()">
 </select>
-<button onclick="toggleTable()">הצגת נתונים</button> <!-- כפתור חדש -->
+<button onclick="toggleTable()">הצגת טבלה של המשתמש</button> <!-- כפתור להצגת הטבלה -->
 
 <table id="dataTable" style="display: none;">
     <thead>
