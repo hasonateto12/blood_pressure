@@ -54,19 +54,29 @@ function CreateTableBody(measurements) {
     }
 }
 
-function toggleTable() {
+// הצגת הזנת הנתונים מיד לאחר בחירת משתמש
+function showInputSection() {
     let userId = document.getElementById("userSelectHistory").value;
-    let table = document.getElementById("dataTable");
     let inputTable = document.getElementById("inputTable");
 
     if (userId) {
-        table.style.display = "table";
         inputTable.style.display = "block";
+    } else {
+        inputTable.style.display = "none";
+    }
+}
+
+// הצגת טבלת הנתונים רק אחרי לחיצה על הכפתור
+function toggleTable() {
+    let userId = document.getElementById("userSelectHistory").value;
+    let table = document.getElementById("dataTable");
+
+    if (userId) {
+        table.style.display = "table";
         GetMeasurements(userId);
     } else {
         alert("נא לבחור משתמש");
         table.style.display = "none";
-        inputTable.style.display = "none";
     }
 }
 
