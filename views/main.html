@@ -13,7 +13,8 @@
 <label for="userSelectHistory"></label>
 <select id="userSelectHistory" onchange="showInputSection()">
 </select>
-<button onclick="toggleTable()">הצגת טבלה של המשתמש</button> <!-- כפתור להצגת הטבלה -->
+
+<button onclick="toggleTable()">הצגת טבלה של המשתמש</button>
 
 <table id="dataTable" style="display: none;">
     <thead>
@@ -22,14 +23,14 @@
         <th>לחץ דיאסטולי</th>
         <th>דופק</th>
         <th>תאריך</th>
+        <th>פעולות</th>
     </tr>
     </thead>
-    <tbody id="mainTableData">
-    </tbody>
+    <tbody id="mainTableData"></tbody>
 </table>
 
 <div id="inputTable" style="display: none;">
-    <h3>הוספת מדידות</h3>
+    <h3>הוספת / עריכת מדידות</h3>
     <table>
         <tr>
             <th>לחץ סיסטולי</th>
@@ -45,6 +46,7 @@
         </tr>
     </table>
     <button onclick="sendMeasurement()">שליחת נתונים</button>
+    <button  onclick="updateMeasurement()">עדכון נתונים</button>
 </div>
 
 <script src="/js/main.js"></script>
