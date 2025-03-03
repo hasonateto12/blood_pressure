@@ -13,7 +13,6 @@
 <label for="userSelectHistory"></label>
 <select id="userSelectHistory" onchange="showInputSection()">
 </select>
-
 <button onclick="toggleTable()">הצגת טבלה של המשתמש</button>
 
 <table id="dataTable" style="display: none;">
@@ -26,7 +25,8 @@
         <th>פעולות</th>
     </tr>
     </thead>
-    <tbody id="mainTableData"></tbody>
+    <tbody id="mainTableData">
+    </tbody>
 </table>
 
 <div id="inputTable" style="display: none;">
@@ -46,7 +46,7 @@
         </tr>
     </table>
     <button onclick="sendMeasurement()">שליחת נתונים</button>
-    <button  onclick="updateMeasurement()">עדכון נתונים</button>
+    <button id="updateButton" onclick="updateMeasurement()" style="display: none;">עדכון נתונים</button>
 </div>
 
 <script src="/js/main.js"></script>
