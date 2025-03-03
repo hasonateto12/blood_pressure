@@ -30,7 +30,7 @@ async function Addmeasurements(req,res,next){
 }
 async function Readmeasurements(req, res, next) {
     let Query = 'SELECT *, ';
-    Query += 'DATE_FORMAT(date, "%d-%m-%Y") AS date, ';
+    Query += 'DATE_FORMAT(date, "%Y-%m-%d") AS date, ';
     Query += '(SELECT AVG(high_value) FROM measurements) AS avg_high, ';
     Query += '(SELECT AVG(low_value) FROM measurements) AS avg_low, ';
     Query += '(SELECT AVG(heart_rate) FROM measurements) AS avg_heart ';
@@ -58,32 +58,30 @@ async function Readmeasurements(req, res, next) {
 }
 
 async function Updatemeasurements(req, res, next) {
-    let idx = parseInt(req.body.idx);
+    let idx = parseInt(req.params.id);
     let high_value = (req.body.high_value === undefined) ? -1 : parseInt(req.body.high_value);
     let low_value = (req.body.low_value === undefined) ? -1 : parseInt(req.body.low_value);
     let heart_rate = (req.body.heart_rate === undefined) ? -1 : parseInt(req.body.heart_rate);
     let date = (req.body.date === undefined) ? "" : addSlashes(req.body.date);
 
-    // بناء الاستعلام باستخدام الاستعلامات المعلمة لتجنب حقن SQL
-    let Query = `UPDATE measurements SET high_value = ?, low_value = ?, heart_rate = ?, date = ? WHERE id = ?`;
+    console.log("Received update request:", req.body);
 
+    let Query = `UPDATE measurements SET high_value = ?, low_value = ?, heart_rate = ?, date = ? WHERE id = ?`;
     const promisePool = db_pool.promise();
     try {
         const [rows] = await promisePool.query(Query, [high_value, low_value, heart_rate, date, idx]);
         if (rows.affectedRows > 0) {
             req.success = true;
+            res.json({ success: true, message: "המדידה עודכנה בהצלחה" });
         } else {
             req.success = false;
-            req.errorMessage = "No records were updated.";
+            res.status(400).json({ success: false, errorMessage: "לא נמצאה מדידה לעדכון" });
         }
     } catch (err) {
         req.success = false;
-        req.errorMessage = "Database error.";
-        console.log(err);
     }
-
-    next();
 }
+
 
 async function Deletemeasurements(req,res,next){
     let idx    = parseInt(req.body.idx);
