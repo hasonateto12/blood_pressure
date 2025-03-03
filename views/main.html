@@ -49,6 +49,21 @@
     <button id="updateButton" onclick="updateMeasurement()" style="display: none;">עדכון נתונים</button>
 </div>
 
+
+<iframe id="contentFrame" style="width: 100%; height: 500px; border: none;"></iframe>
+
+<footer>
+    <button onclick="openUsersPage()" class="nav-button">מעבר לדף המשתמשים</button>
+</footer>
+
+<script>
+    function openUsersPage() {
+        window.open('http://localhost:63342/blood_pressure/views/users.html', '_blank');
+    }
+</script>
+
+
 <script src="/js/main.js"></script>
+
 </body>
 </html>
