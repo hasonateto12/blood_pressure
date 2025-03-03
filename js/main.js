@@ -45,19 +45,19 @@ function CreateTableBody(measurements) {
         let rowClass = row.highlight ? "highlighted" : "";
 
         tableBody.innerHTML += `
-            <tr class="${rowClass}">
+            <tr class="${rowClass}" id="row-${row.id}">
                 <td>${row.high_value}</td>
                 <td>${row.low_value}</td>
                 <td>${row.heart_rate}</td>
                 <td>${smart_due}</td>
                 <td>
                     <button onclick="editMeasurement(${row.id}, ${row.high_value}, ${row.low_value}, ${row.heart_rate}, '${smart_due}')">ערוך</button>
+                    <button onclick="deleteMeasurement(${row.id})" style="background-color: red; color: white;">🗑 מחק</button>
                 </td>
             </tr>
         `;
     }
 }
-
 
 function editMeasurement(id, high, low, heartRate, date) {
     document.getElementById("highValue").value = high;
@@ -166,6 +166,26 @@ async function sendMeasurement() {
     } catch (error) {
         console.error("ERROR", error);
         alert("שגיאה בהוספת הנתונים");
+    }
+}
+
+async function deleteMeasurement(id) {
+
+
+    try {
+        let response = await fetch(`${URL}/M/${id}`, { method: "DELETE" });
+
+        if (response.ok) {
+            console.log("מדידה נמחקה בהצלחה");
+            document.getElementById(`row-${id}`).remove(); // הסרת השורה מהטבלה מיידית
+        } else {
+            let result = await response.json();
+            console.error("שגיאה במחיקת המדידה", result);
+            alert("שגיאה במחיקת המדידה: " + result.message);
+        }
+    } catch (error) {
+        console.error("ERROR", error);
+        alert("שגיאה במחיקת הנתונים");
     }
 }
 
