@@ -84,7 +84,7 @@ async function Updatemeasurements(req, res, next) {
 
 
 async function Deletemeasurements(req,res,next){
-    let idx    = parseInt(req.body.idx);
+    let idx = parseInt(req.params.id);
     let Query = `DELETE FROM measurements  `;
     Query += ` WHERE id = ${idx} `;
     // console.log(Query);
