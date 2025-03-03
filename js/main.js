@@ -52,7 +52,7 @@ function CreateTableBody(measurements) {
                 <td>${smart_due}</td>
                 <td>
                     <button onclick="editMeasurement(${row.id}, ${row.high_value}, ${row.low_value}, ${row.heart_rate}, '${smart_due}')">ערוך</button>
-                    <button onclick="deleteMeasurement(${row.id})" style="background-color: red; color: white;">🗑 מחק</button>
+                    <button onclick="deleteMeasurement(${row.id})" style="background-color: #2ca728; color: white;">🗑 מחק</button>
                 </td>
             </tr>
         `;
