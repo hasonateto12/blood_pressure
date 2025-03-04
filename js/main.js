@@ -219,4 +219,40 @@ async function BuildPage() {
     await GetUsers();
 }
 
+async function displayUsersData(month) {
+    let userId = document.getElementById("userSelectHistory").value;
+    if (!userId) {
+        alert("נא לבחור משתמש");
+        return;
+    }
+
+    try {
+        let url = `${URL}/M/userData?user_id=${userId}&month=${month}`;
+        let response = await fetch(url);
+        let result = await response.json();
+
+        if (response.ok) {
+            let tableBody = document.getElementById("userDataTable");
+            tableBody.innerHTML = ""; // Clear existing data
+
+            result.data.forEach(userData => {
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${userData.user_id}</td>
+                        <td>${userData.avg_high_value}</td>
+                        <td>${userData.avg_low_value}</td>
+                        <td>${userData.avg_heart_rate}</td>
+                        <td>${userData.abnormal_count}</td>
+                    </tr>
+                `;
+            });
+        } else {
+            console.error("Error fetching user data:", result.message);
+            alert("שגיאה בהבאת נתוני המשתמשים");
+        }
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        alert("שגיאה בטעינת נתוני המשתמשים");
+    }
+}
 BuildPage();
