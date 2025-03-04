@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מעקב לחץ הדם</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<h2>מעקב לחץ הדם - ממוצע מדידות למשתמש</h2>
+
+<label for="userSelectHistory"></label>
+<select id="userSelectHistory" onchange="showInputSection()">
+</select>
+
+<label for="monthSelect">בחר חודש</label>
+<select id="monthSelect" onchange="displayUsersData(this.value)">
+    <option value="01">ינואר</option>
+    <option value="02">פברואר</option>
+    <option value="03">מרץ</option>
+    <!-- Add more months as needed -->
+</select>
+
+<table id="userDataTable">
+    <thead>
+    <tr>
+        <th>מספר משתמש</th>
+        <th>ממוצע לחץ סיסטולי</th>
+        <th>ממוצע לחץ דיאסטולי</th>
+        <th>ממוצע דופק</th>
+        <th>כמות מדידות חריגות</th>
+    </tr>
+    </thead>
+    <tbody id="userDataTable"></tbody>
+</table>
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>
