@@ -79,9 +79,38 @@ async function Deleteusers(req,res,next){
     next();
 }
 
+async function GetUserMonthStats(req, res, next) {
+    const userId = req.params.userId; // Get the user ID from URL params
+    const month = req.params.month; // Get the month from URL params
+
+    const query = `
+        SELECT 
+            AVG(high_value) AS avg_systolic,
+            AVG(low_value) AS avg_diastolic,
+            AVG(heart_rate) AS avg_heart_rate,
+            COUNT(*) AS abnormal_count
+        FROM measurements
+        WHERE user_id = ? AND MONTH(date) = ?
+        AND (high_value > 140 OR low_value < 90 OR heart_rate > 100 OR heart_rate < 60)
+    `;
+
+    const promisePool = db_pool.promise();
+    try {
+        const [rows] = await promisePool.query(query, [userId, month]);
+        req.success = true;
+        req.userStats = rows[0]; // Storing the stats in the req object for later use
+    } catch (err) {
+        req.success = false;
+        console.log(err);
+    }
+    next();
+}
+
 module.exports = {
     Addusers: Addusers,
     Readusers:Readusers,
     Updateusers:Updateusers,
     Deleteusers:Deleteusers,
+    GetUserMonthStats:GetUserMonthStats,
+
 }
