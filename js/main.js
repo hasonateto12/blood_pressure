@@ -217,23 +217,19 @@ function toggleTable() {
 
 async function BuildPage() {
     await GetUsers();
+
 }
 
 async function displayUsersData(month) {
     let userId = document.getElementById("userSelectHistory").value;
-    if (!userId) {
-        alert("נא לבחור משתמש");
-        return;
-    }
-
     try {
-        let url = `${URL}/M/userData?user_id=${userId}&month=${month}`;
+        let url = `${URL}/U/userData?user_id=${userId}&month=${month}`;
         let response = await fetch(url);
         let result = await response.json();
 
         if (response.ok) {
-            let tableBody = document.getElementById("userDataTable");
-            tableBody.innerHTML = ""; // Clear existing data
+            let tableBody = document.getElementById("userDataTableBody");  // Updated ID here
+            tableBody.innerHTML = "";
 
             result.data.forEach(userData => {
                 tableBody.innerHTML += `
