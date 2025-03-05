@@ -47,12 +47,11 @@ router.get('/userData', [Users_Mid.GetUserMonthStats], (req, res) => {
     }
 
     if (req.success) {
-        res.status(200).json({ msg: "ok", data: req.user_measurements });
+        res.status(200).json({ msg: "ok" });
     } else {
         console.error("Error fetching user measurements:", req.error);
         res.status(500).json({ message: req.error || "Unknown error" });
     }
 });
-
 
 module.exports = router;
