@@ -79,32 +79,34 @@ async function Deleteusers(req,res,next){
     next();
 }
 
-async function GetUserMonthStats(req, res, next) {
-    const userId = req.params.userId; // Get the user ID from URL params
-    const month = req.params.month; // Get the month from URL params
+async function GetUserMonthStats(req, res) {
+    const userId = req.query.user_id;
+    const month = req.query.month;
 
     const query = `
-        SELECT 
-            AVG(high_value) AS avg_systolic,
-            AVG(low_value) AS avg_diastolic,
-            AVG(heart_rate) AS avg_heart_rate,
+        SELECT
+            user_id,
+            AVG(CASE WHEN high_value > 140 OR low_value < 90 OR heart_rate > 100 OR heart_rate < 60 THEN high_value END) AS avg_high_value,
+            AVG(CASE WHEN high_value > 140 OR low_value < 90 OR heart_rate > 100 OR heart_rate < 60 THEN low_value END) AS avg_low_value,
+            AVG(CASE WHEN high_value > 140 OR low_value < 90 OR heart_rate > 100 OR heart_rate < 60 THEN heart_rate END) AS avg_heart_rate,
             COUNT(*) AS abnormal_count
         FROM measurements
-        WHERE user_id = ? AND MONTH(date) = ?
-        AND (high_value > 140 OR low_value < 90 OR heart_rate > 100 OR heart_rate < 60)
+        WHERE user_id = ? 
+          AND MONTH(date) = ?
+          AND (high_value > 140 OR low_value < 90 OR heart_rate > 100 OR heart_rate < 60)
     `;
 
     const promisePool = db_pool.promise();
     try {
         const [rows] = await promisePool.query(query, [userId, month]);
-        req.success = true;
-        req.userStats = rows[0]; // Storing the stats in the req object for later use
+
+        res.json({ success: true, data: rows });
     } catch (err) {
-        req.success = false;
-        console.log(err);
+        console.log("Database error:", err);
+        res.status(500).json({ success: false, message: "Error fetching user statistics" });
     }
-    next();
 }
+
 
 module.exports = {
     Addusers: Addusers,
