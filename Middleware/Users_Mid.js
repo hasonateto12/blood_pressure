@@ -112,5 +112,4 @@ module.exports = {
     Updateusers:Updateusers,
     Deleteusers:Deleteusers,
     GetUserMonthStats:GetUserMonthStats,
-
 }
