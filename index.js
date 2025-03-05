@@ -31,6 +31,17 @@ app.use('/M/',Measurements_R);
 const Pages_R = require('./Routers/Pages_R');
 app.use('/',Pages_R);
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
+
+var options = {
+    explorer: true
+};
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
+
+
+
 app.listen(port, () => {            //server starts listening for any attempts from a client to connect at port: {port}
     console.log(`Now listening on port http://localhost:${port}`);
 });
