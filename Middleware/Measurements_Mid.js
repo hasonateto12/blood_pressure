@@ -43,9 +43,9 @@ async function Readmeasurements(req, res, next) {
         [rows] = await promisePool.query(Query);
         rows = rows.map(measurement => ({
             ...measurement,
-            highlight: measurement.high_value > measurement.avg_high * 1.2 ||
-                measurement.low_value > measurement.avg_low * 1.2 ||
-                measurement.heart_rate > measurement.avg_heart * 1.2
+            highlight: measurement.high_value > 120 * 1.2 || measurement.high_value < 120 * 0.8 ||
+                measurement.low_value > 80 * 1.2 ||  measurement.low_value < 80 * 0.8 ||
+                measurement.heart_rate > 80 * 1.2 || measurement.heart_rate < 80 * 0.8
         }));
 
         req.success = true;
