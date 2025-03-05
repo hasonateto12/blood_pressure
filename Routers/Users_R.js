@@ -30,7 +30,6 @@ router.put('/', [Users_Mid.Updateusers], (req, res) => {
     }
 });
 
-r
 router.delete('/', [Users_Mid.Deleteusers], (req, res) => {
     if (req.success) {
         res.status(200).json({ msg: "ok" });
