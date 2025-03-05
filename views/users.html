@@ -12,9 +12,12 @@
 
 <label for="userSelectHistory"></label>
 <select id="userSelectHistory" onchange="showInputSection()">
+    <option value="">בחירת משתמש</option>
 </select>
 
-<label for="monthSelect">בחר חודש</label>
+
+
+<label for="monthSelect">בחר חודש:</label>
 <select id="monthSelect" onchange="displayUsersData(this.value)">
     <option value="01">ינואר</option>
     <option value="02">פברואר</option>
@@ -28,8 +31,8 @@
     <option value="10">אוקטובר</option>
     <option value="11">נובמבר</option>
     <option value="12">דצמבר</option>
-
 </select>
+
 
 <table id="userDataTable">
     <thead>
@@ -41,7 +44,7 @@
         <th>כמות מדידות חריגות</th>
     </tr>
     </thead>
-    <tbody id="userDataTable"></tbody>
+    <tbody id="userDataTableBody"></tbody>
 </table>
 
 <script src="/js/main.js"></script>
