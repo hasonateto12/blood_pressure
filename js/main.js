@@ -222,33 +222,46 @@ async function BuildPage() {
 
 async function displayUsersData(month) {
     let userId = document.getElementById("userSelectHistory").value;
+    if (!userId) {
+        alert("נא לבחור משתמש");
+        return;
+    }
+
     try {
         let url = `${URL}/U/userData?user_id=${userId}&month=${month}`;
         let response = await fetch(url);
         let result = await response.json();
 
-        if (response.ok) {
-            let tableBody = document.getElementById("userDataTableBody");  // Updated ID here
-            tableBody.innerHTML = "";
-
-            result.data.forEach(userData => {
-                tableBody.innerHTML += `
-                    <tr>
-                        <td>${userData.user_id}</td>
-                        <td>${userData.avg_high_value}</td>
-                        <td>${userData.avg_low_value}</td>
-                        <td>${userData.avg_heart_rate}</td>
-                        <td>${userData.abnormal_count}</td>
-                    </tr>
-                `;
-            });
-        } else {
+        if (!response.ok) {
             console.error("Error fetching user data:", result.message);
             alert("שגיאה בהבאת נתוני המשתמשים");
+            return;
         }
+
+        let tableBody = document.getElementById("userDataTableBody");
+        tableBody.innerHTML = "";
+
+        if (!result.data || !Array.isArray(result.data)) {
+            console.warn("No data received or invalid format");
+            alert("אין נתונים להצגה עבור החודש הנבחר.");
+            return;
+        }
+
+        result.data.forEach(userData => {
+            tableBody.innerHTML += `
+                <tr>
+                    <td>${userData.user_id}</td>
+                    <td>${userData.avg_high_value}</td>
+                    <td>${userData.avg_low_value}</td>
+                    <td>${userData.avg_heart_rate}</td>
+                    <td>${userData.abnormal_count}</td>
+                </tr>
+            `;
+        });
     } catch (error) {
         console.error("Error fetching user data:", error);
         alert("שגיאה בטעינת נתוני המשתמשים");
     }
 }
+
 BuildPage();
