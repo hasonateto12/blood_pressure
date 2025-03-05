@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     res.status(200).sendFile(path.join(__dirname,"/../views/main.html"));
 })
 
-router.get('/', (req, res) => {
+router.get('/useraverage', (req, res) => {
     res.status(200).sendFile(path.join(__dirname,"/../views/users.html"));
 })
 
