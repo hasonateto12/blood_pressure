@@ -1,47 +1,68 @@
-🩺 Blood Pressure Monitoring System
+# 🩺 Blood Pressure Monitoring System
+
+A web-based application built with **Node.js** for managing and monitoring blood pressure measurements of multiple users. It includes a backend API, a web interface, and built-in analytics for identifying abnormal readings.
+
+## 📦 Features
+
+- 👥 Manage multiple users (via API)
+- 💾 Record systolic, diastolic, and heart rate values
+- 📆 View measurements between specific dates
+- 📊 Highlight abnormal values (20% above average)
+- 📅 Monthly summary of average values and abnormal counts per user
+- 🧪 Integrated Swagger UI at `/api-docs` for testing endpoints
+
+---
+
+## 📁 Project Structure
+
+-Middleware/ # Middleware logic
+-Routers/ # Express routers (user, data, etc.)
+-css/ # Stylesheets
+-js/ # Frontend JS
+-views/ # HTML pages
+-.idea/ # WebStorm project settings
+- blood_pressure.sql # SQL file (schema + sample data)
+ -database.js # DB connection setup
+-gen_params.js # Parameter generators
+-index.js # Main server file
+-swagger.js # Swagger setup
+-package.json # Node dependencies
 
 
-This project is a Node.js-based blood pressure monitoring system designed to manage and visualize users' blood pressure data. It supports multiple users, calculates abnormal measurement averages, and provides a Swagger API for testing and documentation.
 
-🖥️ Web Pages
-Home Page – Main interface for entering and viewing data
+## 🖥️ Web Pages
+-Home Page – Main interface for entering and viewing data
 
-User Data Page (/userData) – Filter records by user and date
+-User Data Page (/userData) – Filter records by user and date
 
-Monthly Summary Page – View each user’s monthly average and abnormal readings
+-Monthly Summary Page – View each user’s monthly average and abnormal readings
 
-Admin Page (optional) – Insert or manage users (if implemented)
+-Admin Page (optional) – Insert or manage users (if implemented)
 
-📊 Abnormal Measurement Detection
-An "abnormal" reading is defined as:
 
-More than 20% higher than the user's average value for:
+## 📊 Abnormal Measurement Detection
+-An "abnormal" reading is defined as:
 
-Systolic
+-More than 20% higher than the user's average value for:
 
-Diastolic
+-Systolic
 
-Pulse
+-Diastolic
 
-These are highlighted in the user data page.
+-Pulse
 
-⚙️ Technologies Used
-Node.js + Express.js
+-These are highlighted in the user data page.
 
-MySQL
 
-JavaScript (Frontend)
+## ⚙️ Technologies Used
+=Node.js + Express.js
 
-HTML + CSS
+=MySQL
 
-Swagger for API documentation
+=JavaScript (Frontend)
 
-📝 License
-This project is open-source and available under the MIT License.
+=HTML + CSS
 
-✍️ Author
-Developed by: hasonateto12
-GitHub: github.com/hasonateto12
-
+=Swagger for API documentation
 
 
