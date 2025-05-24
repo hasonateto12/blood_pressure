@@ -1,80 +1,47 @@
 🩺 Blood Pressure Monitoring System
+
+
 This project is a Node.js-based blood pressure monitoring system designed to manage and visualize users' blood pressure data. It supports multiple users, calculates abnormal measurement averages, and provides a Swagger API for testing and documentation.
 
-📁 Project Structure
-bash
-Copy
-Edit
-.
-├── Middleware/              # Custom middleware logic
-├── Routers/                 # Route definitions
-├── css/                     # Stylesheets
-├── js/                      # Client-side JavaScript
-├── views/                   # HTML pages
-├── .idea/                   # WebStorm project settings
-├── blood_pressure.sql       # Database export with structure and test data
-├── database.js              # DB connection setup
-├── gen_params.js            # Parameter generation logic
-├── index.js                 # Main server file
-├── swagger.js               # Swagger configuration
-├── package.json             # Node.js dependencies
-🚀 Features
-📋 User management (via API, no frontend interface for it)
+🖥️ Web Pages
+Home Page – Main interface for entering and viewing data
 
-📈 Record blood pressure measurements (systolic, diastolic, pulse)
+User Data Page (/userData) – Filter records by user and date
 
-📊 View history between selected dates
+Monthly Summary Page – View each user’s monthly average and abnormal readings
 
-Highlights abnormal measurements (20% above user average)
+Admin Page (optional) – Insert or manage users (if implemented)
 
-📅 Monthly average statistics per user
+📊 Abnormal Measurement Detection
+An "abnormal" reading is defined as:
 
-🌐 Swagger API documentation at /api-docs
+More than 20% higher than the user's average value for:
 
-🛠️ Installation
-Clone the repository:
+Systolic
 
-bash
-Copy
-Edit
-git clone <repository-url>
-cd blood_pressure
-Install dependencies:
+Diastolic
 
-bash
-Copy
-Edit
-npm install
-Setup the database:
+Pulse
 
-Import the blood_pressure.sql file into your MySQL server.
+These are highlighted in the user data page.
 
-Update database credentials in database.js as needed.
+⚙️ Technologies Used
+Node.js + Express.js
 
-Start the server:
+MySQL
 
-bash
-Copy
-Edit
-node index.js
-📘 API Documentation
-After starting the server, visit:
+JavaScript (Frontend)
 
-bash
-Copy
-Edit
-http://localhost:4225/api-docs
-This serves the Swagger UI for testing and exploring the available API endpoints.
+HTML + CSS
 
-📌 Pages Overview
-Homepage: Main interface to log or view data
+Swagger for API documentation
 
-User Data Page (/userData) – View a specific user's history between dates
+📝 License
+This project is open-source and available under the MIT License.
 
-Monthly Summary Page – Show all users’ monthly averages & abnormal counts
+✍️ Author
+Developed by: hasonateto12
+GitHub: github.com/hasonateto12
 
-🧠 Notes
-All abnormal readings are defined as any value exceeding 20% above the user’s average.
 
-User list and available shifts are hardcoded.
 
