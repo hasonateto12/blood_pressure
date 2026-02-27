@@ -1,0 +1,32 @@
+services:
+  api:
+    build: .
+    image: hasonateto12/blood_pressure:latest
+    container_name: blood_pressure_api
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_USER: bp_user
+      DB_PASS: bp_pass
+      DB_NAME: blood_pressure
+      PORT: 2135
+    depends_on:
+      - db
+    ports:
+      - "127.0.0.1:8082:2135"
+
+  db:
+    image: mysql:8.0
+    container_name: blood_pressure_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: blood_pressure
+      MYSQL_USER: bp_user
+      MYSQL_PASSWORD: bp_pass
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - bp_mysql_data:/var/lib/mysql
+      - ./blood_pressure.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
+
+volumes:
+  bp_mysql_data:
