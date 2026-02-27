@@ -42,6 +42,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options))
 
 
 
-app.listen(port, () => {            //server starts listening for any attempts from a client to connect at port: {port}
+app.listen(port, "0.0.0.0", () => {
     console.log(`Now listening on port http://localhost:${port}`);
 });
